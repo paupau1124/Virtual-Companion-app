@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #ffe6f0, #fff);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app {
+    background: white;
+    width: 90%;
+    max-width: 400px;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #ff4d88;
+}
+
+#message {
+    font-size: 1.1rem;
+    margin: 20px 0;
+    color: #444;
+}
+
+.buttons button {
+    width: 100%;
+    padding: 12px;
+    margin: 6px 0;
+    border: none;
+    border-radius: 15px;
+    background: #ffb6c1;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.buttons button:hover {
+    background: #ff8fab;
+}
