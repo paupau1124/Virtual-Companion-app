@@ -2,28 +2,783 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hi Love 💖</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>My Virtual Girlfriend 💕</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Caveat:wght@600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient-1: #ffecd2;
+            --bg-gradient-2: #fcb69f;
+            --card-bg: #fff9f5;
+            --text-primary: #5d4e6d;
+            --text-secondary: #8b7a9e;
+            --accent-pink: #ff6b9d;
+            --accent-coral: #ff8a80;
+            --accent-yellow: #ffd54f;
+            --accent-mint: #80deea;
+            --accent-lavender: #b39ddb;
+            --shadow-soft: 0 8px 32px rgba(93, 78, 109, 0.15);
+            --shadow-glow: 0 0 20px rgba(255, 107, 157, 0.3);
+        }
+
+        .dark {
+            --bg-gradient-1: #2d2640;
+            --bg-gradient-2: #1a1625;
+            --card-bg: #3d3550;
+            --text-primary: #f5e6ff;
+            --text-secondary: #c4b5d4;
+            --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 25px rgba(255, 107, 157, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 100%);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            padding: 16px;
+            transition: background 0.5s ease;
+        }
+
+        .container {
+            max-width: 420px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 8px 0;
+        }
+
+        .header h1 {
+            font-family: 'Caveat', cursive;
+            font-size: 2.5rem;
+            color: var(--accent-pink);
+            text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.5);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .pet-card {
+            background: var(--card-bg);
+            border-radius: 32px;
+            padding: 24px;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pet-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.1) 0%, transparent 60%);
+            animation: shimmer 8s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .pet-area {
+            position: relative;
+            height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .girlfriend-container {
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .girlfriend-container:hover {
+            transform: scale(1.05);
+        }
+
+        .girlfriend-container:active {
+            transform: scale(0.95);
+        }
+
+        /* Animated girlfriend avatar */
+        .girlfriend-avatar {
+            width: 200px;
+            height: 280px;
+            position: relative;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .girlfriend-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 30px rgba(255, 107, 157, 0.3));
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        /* Animation states */
+        .girlfriend-container.happy .girlfriend-avatar {
+            animation: wiggle 0.6s ease-in-out;
+        }
+
+        @keyframes wiggle {
+
+            0%,
+            100% {
+                transform: rotate(0deg) translateY(0);
+            }
+
+            25% {
+                transform: rotate(-8deg) translateY(-10px);
+            }
+
+            75% {
+                transform: rotate(8deg) translateY(-10px);
+            }
+        }
+
+        .girlfriend-container.eating .girlfriend-avatar {
+            animation: eating-bounce 0.4s ease-in-out 3;
+        }
+
+        @keyframes eating-bounce {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-8px) scale(1.05);
+            }
+        }
+
+        .girlfriend-container.sleeping .girlfriend-avatar {
+            animation: sleep 3s ease-in-out infinite;
+            opacity: 0.85;
+        }
+
+        @keyframes sleep {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-3deg);
+            }
+
+            50% {
+                transform: translateY(3px) rotate(3deg);
+            }
+        }
+
+        .girlfriend-container.cuddling .girlfriend-avatar {
+            animation: spin-happy 0.8s ease-in-out;
+        }
+
+        @keyframes spin-happy {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform: rotate(180deg) scale(1.1);
+            }
+
+            100% {
+                transform: rotate(360deg) scale(1);
+            }
+        }
+
+        /* Speech bubble */
+        .speech-bubble {
+            position: absolute;
+            top: -20px;
+            right: -30px;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            box-shadow: var(--shadow-soft);
+            max-width: 180px;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(10px) scale(0.9);
+            transition: all 0.3s ease;
+        }
+
+        .speech-bubble.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 30px;
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 14px solid white;
+        }
+
+        /* Z's for sleeping */
+        .zzz {
+            position: absolute;
+            top: -10px;
+            right: 30px;
+            font-size: 2rem;
+            opacity: 0;
+            color: var(--accent-lavender);
+            pointer-events: none;
+        }
+
+        .girlfriend-container.sleeping .zzz {
+            animation: zzz 2s ease-in-out infinite;
+        }
+
+        @keyframes zzz {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0.8);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateY(-25px) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.8);
+            }
+        }
+
+        /* Hearts animation */
+        .hearts {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 1.8rem;
+            opacity: 0;
+        }
+
+        .heart.animate {
+            animation: float-heart 1.2s ease-out forwards;
+        }
+
+        @keyframes float-heart {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(0);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateY(-40px) scale(1.3);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-80px) scale(0.9);
+            }
+        }
+
+        .pet-name {
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+            color: var(--accent-pink);
+            margin-top: 8px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 16px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .dark .stat {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-icon {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .stat-bar {
+            height: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .stat-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease, background 0.3s ease;
+        }
+
+        .stat-fill.hunger {
+            background: linear-gradient(90deg, var(--accent-coral), var(--accent-yellow));
+        }
+
+        .stat-fill.happiness {
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-coral));
+        }
+
+        .stat-fill.energy {
+            background: linear-gradient(90deg, var(--accent-mint), #4dd0e1);
+        }
+
+        .stat-fill.love {
+            background: linear-gradient(90deg, var(--accent-lavender), var(--accent-pink));
+        }
+
+        /* Action buttons */
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-coral));
+            border: none;
+            border-radius: 20px;
+            padding: 14px 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .action-btn:active {
+            transform: translateY(0);
+        }
+
+        .action-btn .icon {
+            font-size: 1.4rem;
+        }
+
+        .action-btn .label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Message card */
+        .message-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+        }
+
+        .message-card h3 {
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            color: var(--accent-pink);
+            margin-bottom: 8px;
+        }
+
+        .message {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            min-height: 48px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .footer .heart-icon {
+            color: var(--accent-pink);
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(1.2);
+            }
+
+            50% {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 360px) {
+            .girlfriend-avatar {
+                width: 160px;
+                height: 240px;
+            }
+
+            .action-btn {
+                padding: 12px 6px;
+            }
+
+            .action-btn .icon {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <div class="container">
+        <header class="header">
+            <h1>Virtual Girlfriend 💕</h1>
+        </header>
 
-    <div class="app">
-        <h1>Hi love 💕</h1>
-        <p id="message">Tap a button, I’m here 🤍</p>
+        <div class="pet-card">
+            <div class="pet-area">
+                <div class="hearts" id="hearts"></div>
+                <div class="girlfriend-container" id="girlfriend" onclick="girlfriendClicked()">
+                    <div class="speech-bubble" id="speechBubble">Hi baby! 💕</div>
+                    <div class="zzz">💤</div>
+                    <div class="girlfriend-avatar">
+                        <img src="./girlfriend-avatar.png" alt="Your Girlfriend">
+                    </div>
+                </div>
+            </div>
 
-        <div class="buttons">
-            <button onclick="goodMorning()">Good Morning ☀️</button>
-            <button onclick="randomCompliment()">Compliment 💌</button>
-            <button onclick="mood('miss')">I miss you 🥺</button>
-            <button onclick="mood('stress')">I’m stressed 😖</button>
-            <button onclick="mood('happy')">I’m happy 😄</button>
+            <div class="pet-name" id="petName">Your Girlfriend</div>
+
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-icon">🍰</div>
+                    <div class="stat-label">Hunger</div>
+                    <div class="stat-bar">
+                        <div class="stat-fill hunger" id="hungerBar" style="width: 70%"></div>
+                    </div>
+                </div>
+                <div class="stat">
+                    <div class="stat-icon">😊</div>
+                    <div class="stat-label">Happiness</div>
+                    <div class="stat-bar">
+                        <div class="stat-fill happiness" id="happinessBar" style="width: 80%"></div>
+                    </div>
+                </div>
+                <div class="stat">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-label">Energy</div>
+                    <div class="stat-bar">
+                        <div class="stat-fill energy" id="energyBar" style="width: 60%"></div>
+                    </div>
+                </div>
+                <div class="stat">
+                    <div class="stat-icon">💖</div>
+                    <div class="stat-label">Love</div>
+                    <div class="stat-bar">
+                        <div class="stat-fill love" id="loveBar" style="width: 90%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="action-btn" onclick="feedGirlfriend()">
+                    <span class="icon">🍕</span>
+                    <span class="label">Feed</span>
+                </button>
+                <button class="action-btn" onclick="playWithGirlfriend()">
+                    <span class="icon">🎮</span>
+                    <span class="label">Play</span>
+                </button>
+                <button class="action-btn" onclick="cuddleGirlfriend()">
+                    <span class="icon">🤗</span>
+                    <span class="label">Cuddle</span>
+                </button>
+                <button class="action-btn" onclick="restGirlfriend()">
+                    <span class="icon">😴</span>
+                    <span class="label">Rest</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="message-card">
+            <h3>💌 Message for you</h3>
+            <p class="message" id="messageText">Tap on me to see what I'm thinking!</p>
+        </div>
+
+        <div class="footer">
+            Made with <span class="heart-icon">💕</span> for you | Happy Valentine's Day 2025!
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Detect dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            document.documentElement.classList.add(event.matches ? 'dark' : '');
+            if (!event.matches) document.documentElement.classList.remove('dark');
+        });
+
+        // Girlfriend state
+        let stats = {
+            hunger: 70,
+            happiness: 80,
+            energy: 60,
+            love: 90
+        };
+
+        let girlfriendState = 'normal';
+        let customMessages = [
+            "I love you so much! 💕",
+            "You make me so happy!",
+            "Can't stop thinking about you!",
+            "You're the best! 🥰",
+            "Miss your hugs!",
+            "Sending you kisses! 😘",
+            "You're my favorite person!",
+            "Love you to the moon! 🌙",
+            "Thanks for taking care of me!",
+            "You're amazing, you know that?",
+            "I'm so lucky to have you! ✨",
+            "You always make me smile!",
+            "Can't wait to see you! 💖"
+        ];
+
+        function updateStats() {
+            document.getElementById('hungerBar').style.width = stats.hunger + '%';
+            document.getElementById('happinessBar').style.width = stats.happiness + '%';
+            document.getElementById('energyBar').style.width = stats.energy + '%';
+            document.getElementById('loveBar').style.width = stats.love + '%';
+        }
+
+        function showSpeechBubble(text) {
+            const bubble = document.getElementById('speechBubble');
+            bubble.textContent = text;
+            bubble.classList.add('show');
+            setTimeout(() => bubble.classList.remove('show'), 3000);
+        }
+
+        function showMessage(text) {
+            document.getElementById('messageText').textContent = text;
+        }
+
+        function spawnHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            for (let i = 0; i < 6; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.textContent = ['💕', '💖', '💗', '💓', '💝'][Math.floor(Math.random() * 5)];
+                    heart.style.left = (Math.random() * 80 - 40) + 'px';
+                    heart.style.top = (Math.random() * 50 - 25) + 'px';
+                    heartsContainer.appendChild(heart);
+
+                    requestAnimationFrame(() => heart.classList.add('animate'));
+
+                    setTimeout(() => heart.remove(), 1200);
+                }, i * 120);
+            }
+        }
+
+        function setGirlfriendState(state, duration = 600) {
+            const girlfriend = document.getElementById('girlfriend');
+
+            if (girlfriendState === 'sleeping' && state !== 'sleeping') {
+                girlfriend.classList.remove('sleeping');
+            }
+
+            girlfriendState = state;
+            girlfriend.classList.remove('happy', 'eating', 'sleeping', 'cuddling');
+
+            if (state !== 'normal') {
+                girlfriend.classList.add(state);
+                if (state !== 'sleeping') {
+                    setTimeout(() => {
+                        girlfriend.classList.remove(state);
+                        girlfriendState = 'normal';
+                    }, duration);
+                }
+            }
+        }
+
+        function feedGirlfriend() {
+            stats.hunger = Math.min(100, stats.hunger + 20);
+            stats.happiness = Math.min(100, stats.happiness + 5);
+            stats.energy = Math.min(100, stats.energy + 5);
+            updateStats();
+            setGirlfriendState('eating', 1200);
+            showSpeechBubble('Yummy! 😋');
+            showMessage('Thanks for the food babe! You always know what I like! 🍕💕');
+        }
+
+        function playWithGirlfriend() {
+            stats.happiness = Math.min(100, stats.happiness + 20);
+            stats.energy = Math.max(0, stats.energy - 15);
+            stats.love = Math.min(100, stats.love + 5);
+            updateStats();
+            setGirlfriendState('happy', 600);
+            spawnHearts();
+            showSpeechBubble('This is so fun! 🎉');
+            showMessage('I love spending time with you! You always make me laugh! 🎮😄');
+        }
+
+        function cuddleGirlfriend() {
+            stats.love = Math.min(100, stats.love + 25);
+            stats.happiness = Math.min(100, stats.happiness + 15);
+            updateStats();
+            spawnHearts();
+            setGirlfriendState('cuddling', 800);
+            showSpeechBubble('I love you so much! 💕');
+            showMessage('Your hugs are the absolute best! I never want to let go! 🤗💖');
+        }
+
+        function restGirlfriend() {
+            stats.energy = Math.min(100, stats.energy + 30);
+            updateStats();
+            setGirlfriendState('sleeping');
+            showSpeechBubble('Need a nap... 💤');
+            showMessage('Gonna take a little rest... dream about you... 😴💭✨');
+
+            setTimeout(() => {
+                setGirlfriendState('normal');
+                showSpeechBubble('That was a good nap! ✨');
+            }, 4000);
+        }
+
+        function girlfriendClicked() {
+            if (girlfriendState === 'sleeping') return;
+
+            spawnHearts();
+            stats.love = Math.min(100, stats.love + 3);
+            stats.happiness = Math.min(100, stats.happiness + 2);
+            updateStats();
+
+            const randomMsg = customMessages[Math.floor(Math.random() * customMessages.length)];
+            showSpeechBubble(randomMsg);
+            showMessage(randomMsg);
+
+            setGirlfriendState('happy', 600);
+        }
+
+        // Stats decay over time
+        setInterval(() => {
+            if (girlfriendState !== 'sleeping') {
+                stats.hunger = Math.max(0, stats.hunger - 0.5);
+                stats.energy = Math.max(0, stats.energy - 0.3);
+            }
+            stats.happiness = Math.max(0, stats.happiness - 0.2);
+            updateStats();
+
+            // Show messages when stats are low
+            if (stats.hunger < 20 && girlfriendState === 'normal') {
+                showSpeechBubble("I'm hungry babe! 🥺");
+            } else if (stats.energy < 20 && girlfriendState === 'normal') {
+                showSpeechBubble("So sleepy... 😴");
+            } else if (stats.happiness < 20 && girlfriendState === 'normal') {
+                showSpeechBubble("Play with me? 🥺");
+            }
+        }, 10000);
+
+        // Initial greeting
+        setTimeout(() => {
+            showSpeechBubble('Hi baby! 💕');
+            showMessage('Tap on me anytime! I love talking to you! 😊');
+        }, 500);
+    </script>
 </body>
 
 </html>
