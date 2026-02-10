@@ -10,12 +10,12 @@
         rel="stylesheet">
     <style>
         :root {
-            --bg-gradient-1: #ffecd2;
-            --bg-gradient-2: #fcb69f;
-            --card-bg: #fff9f5;
-            --text-primary: #5d4e6d;
+            --bg-gradient-1: #d84d6f;
+            --bg-gradient-2: #ededed;
+            --card-bg: #c77d9b;
+            --text-primary: #6d4e67;
             --text-secondary: #8b7a9e;
-            --accent-pink: #ff6b9d;
+            --accent-pink: #fdfdfd;
             --accent-coral: #ff8a80;
             --accent-yellow: #ffd54f;
             --accent-mint: #80deea;
@@ -25,31 +25,50 @@
         }
 
         .dark {
-            --bg-gradient-1: #2d2640;
-            --bg-gradient-2: #1a1625;
-            --card-bg: #3d3550;
-            --text-primary: #f5e6ff;
-            --text-secondary: #c4b5d4;
+            --bg-gradient-1: #ffffff;
+            --bg-gradient-2: #f17a9e;
+            --card-bg: #ed91a8;
+            --text-primary: #f6658c;
+            --text-secondary: #f1f1f1;
             --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.4);
             --shadow-glow: 0 0 25px rgba(255, 107, 157, 0.4);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+        .speech-bubble {
+            position: absolute;
+            top: -20px;
+            right: -30px;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-pink);
+            box-shadow: var(--shadow-soft);
+            max-width: 180px;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(10px) scale(0.9);
+            transition: all 0.3s ease;
         }
 
         body {
             font-family: 'Nunito', sans-serif;
             min-height: 100vh;
-            background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 100%);
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.35),
+                    rgba(255, 255, 255, 0.35)),
+                url("./heart bg.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
             color: var(--text-primary);
             overflow-x: hidden;
             padding: 16px;
-            transition: background 0.5s ease;
         }
+
 
         .container {
             max-width: 420px;
@@ -68,7 +87,7 @@
             font-family: 'Caveat', cursive;
             font-size: 2.5rem;
             color: var(--accent-pink);
-            text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.5);
+            text-shadow: 2px 2px 0 rgba(210, 69, 69, 0.5);
             animation: float 3s ease-in-out infinite;
         }
 
@@ -85,23 +104,20 @@
         }
 
         .pet-card {
-            background: var(--card-bg);
+            position: relative;
+            /* REQUIRED */
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
             border-radius: 32px;
             padding: 24px;
             box-shadow: var(--shadow-soft);
-            position: relative;
-            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
+
         .pet-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 107, 157, 0.1) 0%, transparent 60%);
-            animation: shimmer 8s linear infinite;
+            pointer-events: none;
         }
 
         @keyframes shimmer {
@@ -454,14 +470,19 @@
             letter-spacing: 0.5px;
         }
 
-        /* Message card */
         .message-card {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
             border-radius: 24px;
             padding: 20px;
             box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+
             text-align: center;
         }
+
 
         .message-card h3 {
             font-family: 'Caveat', cursive;
@@ -525,7 +546,7 @@
 <body>
     <div class="container">
         <header class="header">
-            <h1>Virtual Girlfriend 💕</h1>
+            <h1>Love love💕</h1>
         </header>
 
         <div class="pet-card">
@@ -540,7 +561,7 @@
                 </div>
             </div>
 
-            <div class="pet-name" id="petName">Your Girlfriend</div>
+            <div class="pet-name" id="petName">Pauline</div>
 
             <div class="stats-grid">
                 <div class="stat">
@@ -599,21 +620,17 @@
         </div>
 
         <div class="footer">
-            Made with <span class="heart-icon">💕</span> for you | Happy Valentine's Day 2025!
+            Made with <span class="heart-icon">💕</span> for you
         </div>
     </div>
 
     <script>
-        // Detect dark mode
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // 🌙 Dark mode
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark');
         }
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-            document.documentElement.classList.add(event.matches ? 'dark' : '');
-            if (!event.matches) document.documentElement.classList.remove('dark');
-        });
 
-        // Girlfriend state
+        // 📊 Stats
         let stats = {
             hunger: 70,
             happiness: 80,
@@ -622,163 +639,195 @@
         };
 
         let girlfriendState = 'normal';
-        let customMessages = [
+        let isAngry = false;
+
+        let avatarImg = document.querySelector('.girlfriend-avatar img');
+
+        const avatarMoods = {
+            normal: './girlfriend-avatar.png',
+            happy: './girlfriend-avatar-happy.png',
+            hungry: './girlfriend-avatar-hungry.png',
+            angry: './girlfriend-avatar-angry.png',
+            sleepy: './girlfriend-avatar-sleepy.png'
+        };
+
+        // 💬 Messages
+        const customMessages = [
             "I love you so much! 💕",
             "You make me so happy!",
             "Can't stop thinking about you!",
             "You're the best! 🥰",
             "Miss your hugs!",
             "Sending you kisses! 😘",
-            "You're my favorite person!",
-            "Love you to the moon! 🌙",
-            "Thanks for taking care of me!",
-            "You're amazing, you know that?",
-            "I'm so lucky to have you! ✨",
-            "You always make me smile!",
-            "Can't wait to see you! 💖"
+            "You're my favorite person!"
         ];
 
         function updateStats() {
-            document.getElementById('hungerBar').style.width = stats.hunger + '%';
-            document.getElementById('happinessBar').style.width = stats.happiness + '%';
-            document.getElementById('energyBar').style.width = stats.energy + '%';
-            document.getElementById('loveBar').style.width = stats.love + '%';
+            hungerBar.style.width = stats.hunger + '%';
+            happinessBar.style.width = stats.happiness + '%';
+            energyBar.style.width = stats.energy + '%';
+            loveBar.style.width = stats.love + '%';
         }
 
         function showSpeechBubble(text) {
-            const bubble = document.getElementById('speechBubble');
+            const bubble = speechBubble;
             bubble.textContent = text;
             bubble.classList.add('show');
             setTimeout(() => bubble.classList.remove('show'), 3000);
         }
 
         function showMessage(text) {
-            document.getElementById('messageText').textContent = text;
+            messageText.textContent = text;
         }
 
         function spawnHearts() {
-            const heartsContainer = document.getElementById('hearts');
+            const container = hearts;
             for (let i = 0; i < 6; i++) {
                 setTimeout(() => {
                     const heart = document.createElement('div');
                     heart.className = 'heart';
-                    heart.textContent = ['💕', '💖', '💗', '💓', '💝'][Math.floor(Math.random() * 5)];
-                    heart.style.left = (Math.random() * 80 - 40) + 'px';
-                    heart.style.top = (Math.random() * 50 - 25) + 'px';
-                    heartsContainer.appendChild(heart);
-
-                    requestAnimationFrame(() => heart.classList.add('animate'));
-
+                    heart.textContent = '💖';
+                    container.appendChild(heart);
                     setTimeout(() => heart.remove(), 1200);
-                }, i * 120);
+                }, i * 100);
             }
         }
 
-        function setGirlfriendState(state, duration = 600) {
-            const girlfriend = document.getElementById('girlfriend');
-
-            if (girlfriendState === 'sleeping' && state !== 'sleeping') {
-                girlfriend.classList.remove('sleeping');
-            }
+        // 🎭 STATE HANDLER (FIXED)
+        function setGirlfriendState(state, mood = 'normal') {
+            const gf = girlfriend;
 
             girlfriendState = state;
-            girlfriend.classList.remove('happy', 'eating', 'sleeping', 'cuddling');
+            gf.className = '';
+            gf.classList.add(state);
 
-            if (state !== 'normal') {
-                girlfriend.classList.add(state);
-                if (state !== 'sleeping') {
-                    setTimeout(() => {
-                        girlfriend.classList.remove(state);
-                        girlfriendState = 'normal';
-                    }, duration);
-                }
-            }
+            avatarImg.src = avatarMoods[mood] || avatarMoods.normal;
         }
 
+        // 😤 ANGER
+        function makeGirlfriendAngry() {
+            if (isAngry) return;
+
+            isAngry = true;
+            setGirlfriendState('angry', 'angry');
+
+            showSpeechBubble("I'm mad at you 😤");
+            showMessage("Cuddle me if you still care 😠💔");
+        }
+
+        // 🍕 FEED
         function feedGirlfriend() {
-            stats.hunger = Math.min(100, stats.hunger + 20);
-            stats.happiness = Math.min(100, stats.happiness + 5);
-            stats.energy = Math.min(100, stats.energy + 5);
+            if (isAngry) {
+                showSpeechBubble("No. I'm mad 😤");
+                return;
+            }
+
+            stats.hunger = Math.min(100, stats.hunger + 25);
             updateStats();
-            setGirlfriendState('eating', 1200);
-            showSpeechBubble('Yummy! 😋');
-            showMessage('Thanks for the food babe! You always know what I like! 🍕💕');
+
+            setGirlfriendState('happy', 'happy');
+            showSpeechBubble("Yummy 😋");
         }
 
+        // 🎮 PLAY
         function playWithGirlfriend() {
+            if (isAngry) {
+                showSpeechBubble("Not in the mood 😠");
+                return;
+            }
+
             stats.happiness = Math.min(100, stats.happiness + 20);
-            stats.energy = Math.max(0, stats.energy - 15);
-            stats.love = Math.min(100, stats.love + 5);
+            stats.energy = Math.max(0, stats.energy - 10);
             updateStats();
-            setGirlfriendState('happy', 600);
+
             spawnHearts();
-            showSpeechBubble('This is so fun! 🎉');
-            showMessage('I love spending time with you! You always make me laugh! 🎮😄');
+            setGirlfriendState('happy', 'happy');
         }
 
-        function cuddleGirlfriend() {
-            stats.love = Math.min(100, stats.love + 25);
-            stats.happiness = Math.min(100, stats.happiness + 15);
-            updateStats();
-            spawnHearts();
-            setGirlfriendState('cuddling', 800);
-            showSpeechBubble('I love you so much! 💕');
-            showMessage('Your hugs are the absolute best! I never want to let go! 🤗💖');
-        }
-
+        // 😴 REST
         function restGirlfriend() {
+            if (isAngry) {
+                showSpeechBubble("I'm too upset to sleep 😤");
+                return;
+            }
+
             stats.energy = Math.min(100, stats.energy + 30);
             updateStats();
-            setGirlfriendState('sleeping');
-            showSpeechBubble('Need a nap... 💤');
-            showMessage('Gonna take a little rest... dream about you... 😴💭✨');
 
-            setTimeout(() => {
-                setGirlfriendState('normal');
-                showSpeechBubble('That was a good nap! ✨');
-            }, 4000);
+            setGirlfriendState('sleeping', 'sleepy');
         }
 
-        function girlfriendClicked() {
-            if (girlfriendState === 'sleeping') return;
+        // 🤗 CUDDLE (ANGER FIX)
+        function cuddleGirlfriend() {
+            if (isAngry) {
+                isAngry = false;
+
+                stats.happiness = Math.min(100, stats.happiness + 40);
+                stats.love = Math.min(100, stats.love + 30);
+                updateStats();
+
+                spawnHearts();
+                setGirlfriendState('happy', 'happy');
+
+                showSpeechBubble("Okay… I'm happy again 🥺💕");
+                showMessage("I needed that 🤗");
+                return;
+            }
+
+            stats.happiness += 10;
+            stats.love += 15;
+            updateStats();
 
             spawnHearts();
-            stats.love = Math.min(100, stats.love + 3);
-            stats.happiness = Math.min(100, stats.happiness + 2);
-            updateStats();
-
-            const randomMsg = customMessages[Math.floor(Math.random() * customMessages.length)];
-            showSpeechBubble(randomMsg);
-            showMessage(randomMsg);
-
-            setGirlfriendState('happy', 600);
+            setGirlfriendState('happy', 'happy');
         }
 
-        // Stats decay over time
-        setInterval(() => {
-            if (girlfriendState !== 'sleeping') {
-                stats.hunger = Math.max(0, stats.hunger - 0.5);
-                stats.energy = Math.max(0, stats.energy - 0.3);
-            }
-            stats.happiness = Math.max(0, stats.happiness - 0.2);
+        // 👆 CLICK
+        function girlfriendClicked() {
+            if (isAngry) return;
+
+            stats.love += 3;
+            stats.happiness += 2;
             updateStats();
 
-            // Show messages when stats are low
-            if (stats.hunger < 20 && girlfriendState === 'normal') {
-                showSpeechBubble("I'm hungry babe! 🥺");
-            } else if (stats.energy < 20 && girlfriendState === 'normal') {
-                showSpeechBubble("So sleepy... 😴");
-            } else if (stats.happiness < 20 && girlfriendState === 'normal') {
-                showSpeechBubble("Play with me? 🥺");
-            }
-        }, 10000);
+            const msg = customMessages[Math.floor(Math.random() * customMessages.length)];
+            showSpeechBubble(msg);
+            showMessage(msg);
+        }
 
-        // Initial greeting
+        // ⏳ STAT DECAY (FIXED & FASTER)
+        setInterval(() => {
+            if (girlfriendState !== 'sleeping') {
+                stats.hunger = Math.max(0, stats.hunger - 2);
+                stats.energy = Math.max(0, stats.energy - 1);
+            }
+
+            // 💔 REAL happiness loss
+            if (!isAngry) stats.happiness = Math.max(0, stats.happiness - 3);
+
+            updateStats();
+
+            // PRIORITY: ANGER FIRST
+            if (stats.happiness < 20 && !isAngry) {
+                makeGirlfriendAngry();
+            } else if (!isAngry && stats.hunger < 25) {
+                setGirlfriendState('hungry', 'hungry');
+                showSpeechBubble("I'm hungry 🥺");
+            } else if (!isAngry && stats.energy < 25) {
+                setGirlfriendState('sleepy', 'sleepy');
+                showSpeechBubble("I'm sleepy 😴");
+            }
+        }, 5000);
+
+        // 👋 Greeting
         setTimeout(() => {
-            showSpeechBubble('Hi baby! 💕');
-            showMessage('Tap on me anytime! I love talking to you! 😊');
+            showSpeechBubble("Hi baby 💕");
+            showMessage("Take care of me 🥺");
         }, 500);
     </script>
+
+
+
 </body>
 
 </html>
